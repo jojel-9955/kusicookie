@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KusiCookie | Galletas Nutritivas & Deliciosas</title>
+    <!-- Tailwind CSS desde CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            avena: '#F7F3E9',
+                            trigo: '#E8D8C8',
+                            cacao: '#5D4037',
+                            cacaoDark: '#3E2723',
+                            verde: '#2E7D32',
+                            verdeLight: '#E8F5E9',
+                            verdeHover: '#1B5E20',
+                            sol: '#FBC02D'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para Íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF8F5;
+            color: #3E2723;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(247, 243, 233, 0.95) 0%, rgba(232, 216, 200, 0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: float 4s ease-in-out 2s infinite;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-verde selection:text-white">
+
+    <!-- 1. HEADER & NAVEGACIÓN -->
+    <header class="sticky top-0 z-40 bg-brand-avena/90 backdrop-blur-md border-b border-brand-trigo/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo & Nombre -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-12 h-12 rounded-full bg-brand-verde flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-cookie-bite"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold tracking-tight text-brand-cacao block leading-none">Kusi<span class="text-brand-verde">Cookie</span></span>
+                    <span class="text-xs font-semibold text-brand-cacao/70 tracking-widest uppercase">Galletas Nutritivas</span>
+                </div>
+            </a>
+
+            <!-- Navegación Desktop -->
+            <nav class="hidden md:flex space-x-8 text-base font-semibold text-brand-cacao">
+                <a href="#inicio" class="hover:text-brand-verde transition-colors">Inicio</a>
+                <a href="#catalogo" class="hover:text-brand-verde transition-colors">Catálogo</a>
+                <a href="#ingredientes" class="hover:text-brand-verde transition-colors">Ingredientes</a>
+                <a href="#nosotros" class="hover:text-brand-verde transition-colors">Nosotros</a>
+                <a href="#pedidos" class="hover:text-brand-verde transition-colors">Pedidos</a>
+            </nav>
+
+            <!-- Botones Derecha -->
+            <div class="hidden md:flex items-center space-x-3">
+                <button onclick="openAdminModal()" class="bg-brand-cacao/10 hover:bg-brand-cacao hover:text-white text-brand-cacao px-4 py-2.5 rounded-full font-semibold transition text-sm flex items-center space-x-2 border border-brand-cacao/20">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Admin</span>
+                </button>
+                <a href="#pedidos" class="bg-brand-verde text-white px-5 py-2.5 rounded-full font-semibold shadow-md hover:bg-brand-verdeHover transition-all transform hover:-translate-y-0.5 flex items-center space-x-2">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Hacer Pedido</span>
+                </a>
+            </div>
+
+            <!-- Botón Menú Móvil -->
+            <button id="mobile-menu-btn" class="md:hidden text-brand-cacao text-2xl p-2 focus:outline-none" aria-label="Abrir Menú">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-avena border-b border-brand-trigo px-4 pt-2 pb-6 space-y-3">
+            <a href="#inicio" class="mobile-link block text-brand-cacao font-medium py-2 hover:text-brand-verde">Inicio</a>
+            <a href="#catalogo" class="mobile-link block text-brand-cacao font-medium py-2 hover:text-brand-verde">Catálogo</a>
+            <a href="#ingredientes" class="mobile-link block text-brand-cacao font-medium py-2 hover:text-brand-verde">Ingredientes</a>
+            <a href="#nosotros" class="mobile-link block text-brand-cacao font-medium py-2 hover:text-brand-verde">Nosotros</a>
+            <a href="#pedidos" class="mobile-link block text-brand-cacao font-medium py-2 hover:text-brand-verde">Pedidos</a>
+            <button onclick="openAdminModal()" class="w-full text-center bg-brand-cacao/10 text-brand-cacao py-2.5 rounded-xl font-semibold border border-brand-cacao/20 block">
+                <i class="fa-solid fa-user-gear mr-1"></i> Panel Administrador
+            </button>
+            <a href="#pedidos" class="mobile-link w-full text-center bg-brand-verde text-white py-3 rounded-xl font-semibold shadow-md block">Hacer Pedido</a>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section id="inicio" class="hero-bg min-h-[calc(100vh-80px)] flex items-center relative overflow-hidden py-16 lg:py-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Texto Principal -->
+            <div class="space-y-6 text-center lg:text-left z-10">
+                <div class="inline-flex items-center space-x-2 bg-brand-verdeLight border border-brand-verde/30 text-brand-verde px-4 py-1.5 rounded-full text-sm font-bold shadow-sm">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <span>Nutrición & Sabor Saludable</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-cacao leading-tight">
+                    Sabor natural para combatir la <span class="text-brand-verde underline decoration-brand-sol decoration-wavy">anemia</span>.
+                </h1>
+                
+                <p class="text-lg text-brand-cacao/80 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                    Galletas artesanales elaboradas con avena, chía, harina de quinua, harina de linaza, plátano, leche natural y cacao por <strong>KusiCookie</strong>. Una propuesta deliciosa y nutritiva.
+                </p>
+
+                <!-- Botones Call to Action -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#pedidos" class="w-full sm:w-auto bg-brand-verde text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-brand-verdeHover transition-all transform hover:-translate-y-1 text-center flex items-center justify-center space-x-3">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span>¡Pide tus KusiCookies!</span>
+                    </a>
+                    <a href="#catalogo" class="w-full sm:w-auto bg-white/80 hover:bg-white text-brand-cacao border border-brand-trigo px-8 py-4 rounded-full font-semibold text-lg shadow-sm hover:shadow transition-all text-center">
+                        Ver Catálogo
+                    </a>
+                </div>
+
+                <!-- Métricas / Badges Rápidos -->
+                <div class="pt-8 grid grid-cols-3 gap-4 border-t border-brand-cacao/10 max-w-md mx-auto lg:mx-0">
+                    <div>
+                        <span class="block text-2xl font-extrabold text-brand-verde">100%</span>
+                        <span class="text-xs text-brand-cacao/70 font-medium">Natural</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-extrabold text-brand-cacao">0%</span>
+                        <span class="text-xs text-brand-cacao/70 font-medium">Preservantes</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-extrabold text-brand-verde">S/ 2.00</span>
+                        <span class="text-xs text-brand-cacao/70 font-medium">Desde</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Imagen Principal & Badges Flotantes -->
+            <div class="relative flex justify-center items-center">
+                <div class="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[450px] lg:h-[450px] rounded-full bg-brand-trigo/40 p-4 shadow-2xl flex items-center justify-center">
+                    <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop" 
+                         alt="Galletas KusiCookie" 
+                         class="w-full h-full object-cover rounded-full border-4 border-white shadow-inner transform hover:scale-105 transition-transform duration-500">
+                </div>
+
+                <!-- Badges Flotantes -->
+                <div class="absolute -top-4 left-4 sm:left-10 glass-card p-4 rounded-2xl shadow-xl flex items-center space-x-3 animate-float border border-white">
+                    <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-brand-sol text-xl">
+                        <i class="fa-solid fa-wheat-awn"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-brand-cacao uppercase">Superalimentos</p>
+                        <p class="text-xs text-brand-cacao/70">Quinua, Linaza & Chía</p>
+                    </div>
+                </div>
+
+                <div class="absolute -bottom-4 right-4 sm:right-10 glass-card p-4 rounded-2xl shadow-xl flex items-center space-x-3 animate-float-delayed border border-white">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-brand-verde text-xl">
+                        <i class="fa-solid fa-cow"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-brand-cacao uppercase">Proteína & Calcio</p>
+                        <p class="text-xs text-brand-cacao/70">Leche Natural & Avena</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. CATÁLOGO DE PRODUCTOS -->
+    <section id="catalogo" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase font-extrabold text-brand-verde tracking-widest mb-2">Variedades KusiCookie</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-brand-cacao">Nuestro Catálogo</h3>
+                <p class="mt-4 text-brand-cacao/70 text-lg">Deliciosas, crujientes y preparadas con ingredientes de alta calidad para cuidar tu salud.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Producto 1: Chocochips -->
+                <div class="bg-brand-avena/40 rounded-3xl p-6 border border-brand-trigo/50 hover:border-brand-verde hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative">
+                    <div>
+                        <div class="h-56 rounded-2xl overflow-hidden mb-6 relative">
+                            <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=600&auto=format&fit=crop" alt="Galleta Chocochips" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-cacao text-white px-3 py-1 rounded-full text-xs font-bold">¡Favorita!</span>
+                            <span id="badge-stock-chocochips" class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-brand-cacao px-2.5 py-1 rounded-lg text-xs font-bold border">
+                                Stock: <span id="stock-val-chocochips">25</span>
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-brand-cacao">Galletas Chocochips</h4>
+                            <span class="text-xl font-extrabold text-brand-verde">S/ 2.50</span>
+                        </div>
+                        <p class="text-brand-cacao/70 text-sm leading-relaxed mb-4">
+                            Crujientes galletas con chispas de chocolate, avena, harina de quinua, plátano y leche natural.
+                        </p>
+                    </div>
+                    <button id="btn-add-chocochips" onclick="addToOrder('chocochips')" class="w-full bg-brand-verde hover:bg-brand-verdeHover text-white py-3 rounded-2xl font-bold transition flex items-center justify-center space-x-2 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span id="btn-text-chocochips">Agregar al Pedido</span>
+                    </button>
+                </div>
+
+                <!-- Producto 2: Galletas de Chía y Linaza -->
+                <div class="bg-brand-avena/40 rounded-3xl p-6 border border-brand-trigo/50 hover:border-brand-verde hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative">
+                    <div>
+                        <div class="h-56 rounded-2xl overflow-hidden mb-6 relative">
+                            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop" alt="Galletas de Chía y Linaza sin chispas" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-verde text-white px-3 py-1 rounded-full text-xs font-bold">Sin Chispas</span>
+                            <span id="badge-stock-chia" class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-brand-cacao px-2.5 py-1 rounded-lg text-xs font-bold border">
+                                Stock: <span id="stock-val-chia">30</span>
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-brand-cacao">Galletas de Chía & Linaza</h4>
+                            <span class="text-xl font-extrabold text-brand-verde">S/ 2.00</span>
+                        </div>
+                        <p class="text-brand-cacao/70 text-sm leading-relaxed mb-4">
+                            Galleta artesanal dorada de granos enteros sin chispas. Enriquecida con semillas de chía, harina de linaza y harina de quinua.
+                        </p>
+                    </div>
+                    <button id="btn-add-chia" onclick="addToOrder('chia')" class="w-full bg-brand-verde hover:bg-brand-verdeHover text-white py-3 rounded-2xl font-bold transition flex items-center justify-center space-x-2 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span id="btn-text-chia">Agregar al Pedido</span>
+                    </button>
+                </div>
+
+                <!-- Producto 3: Pack Combinado -->
+                <div class="bg-brand-avena/40 rounded-3xl p-6 border border-brand-trigo/50 hover:border-brand-verde hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative">
+                    <div>
+                        <div class="h-56 rounded-2xl overflow-hidden mb-6 relative">
+                            <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=600&auto=format&fit=crop" alt="Pack Combinado Nutritivo" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-sol text-brand-cacao font-extrabold px-3 py-1 rounded-full text-xs">Pack x6</span>
+                            <span id="badge-stock-pack" class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-brand-cacao px-2.5 py-1 rounded-lg text-xs font-bold border">
+                                Stock: <span id="stock-val-pack">15</span>
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-brand-cacao">Pack Nutritivo (6 Unid)</h4>
+                            <span class="text-xl font-extrabold text-brand-verde">S/ 13.00</span>
+                        </div>
+                        <p class="text-brand-cacao/70 text-sm leading-relaxed mb-4">
+                            Ideal para la semana. Incluye 3 Galletas Chocochips y 3 Galletas de Chía & Linaza en empaque especial.
+                        </p>
+                    </div>
+                    <button id="btn-add-pack" onclick="addToOrder('pack')" class="w-full bg-brand-verde hover:bg-brand-verdeHover text-white py-3 rounded-2xl font-bold transition flex items-center justify-center space-x-2 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span id="btn-text-pack">Agregar al Pedido</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. INGREDIENTES DEL INFORME ACTUALIZADOS -->
+    <section id="ingredientes" class="py-20 bg-brand-avena/50 border-y border-brand-trigo/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs uppercase font-extrabold text-brand-verde tracking-widest mb-2">Formulación Nutritiva Completa</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-brand-cacao">Nuestros 7 Ingredientes Clave</h3>
+                <p class="mt-4 text-brand-cacao/70 text-lg">Insumos seleccionados estratégicamente para maximizar el valor nutricional y el sabor.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 1. Avena -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-trigo/30 overflow-hidden group">
+                    <div class="h-36 rounded-2xl overflow-hidden mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=600&auto=format&fit=crop" alt="Avena integral" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs font-bold text-brand-cacao">Base</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand-cacao mb-1">Avena Integral</h4>
+                    <p class="text-brand-cacao/70 text-xs">Cereal rico en fibra soluble y complejo B. Otorga saciedad y energía duradera.</p>
+                </div>
+
+                <!-- 2. Harina de Quinua -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-trigo/30 overflow-hidden group">
+                    <div class="h-36 rounded-2xl overflow-hidden mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=600&auto=format&fit=crop" alt="Harina de Quinua" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs font-bold text-brand-cacao">Proteína Andina</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand-cacao mb-1">Harina de Quinua</h4>
+                    <p class="text-brand-cacao/70 text-xs">Aporta aminoácidos esenciales, hierro vegetal y minerales clave para combatir la anemia.</p>
+                </div>
+
+                <!-- 3. Chía -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-trigo/30 overflow-hidden group">
+                    <div class="h-36 rounded-2xl overflow-hidden mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1514733670139-4d87a1941d55?q=80&w=600&auto=format&fit=crop" alt="Semillas de Chía" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs font-bold text-brand-cacao">Omega-3</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand-cacao mb-1">Semillas de Chía</h4>
+                    <p class="text-brand-cacao/70 text-xs">Superalimento alto en Omega-3, antioxidantes, calcio y fibra digestiva.</p>
+                </div>
+
+                <!-- 4. Harina de Linaza -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-trigo/30 overflow-hidden group">
+                    <div class="h-36 rounded-2xl overflow-hidden mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1608797178974-15b35a640536?q=80&w=600&auto=format&fit=crop" alt="Harina de Linaza" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs font-bold text-brand-cacao">Fibra Digestiva</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand-cacao mb-1">Harina de Linaza</h4>
+                    <p class="text-brand-cacao/70 text-xs">Molienda fina de linaza rica en lignanos y grasas saludables para la memoria y digestión.</p>
+                </div>
+
+                <!-- 5. Leche Natural -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-trigo/30 overflow-hidden group">
+                    <div class="h-36 rounded-2xl overflow-hidden mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=600&auto=format&fit=crop" alt="Leche Natural" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs font-bold text-brand-cacao">Calcio & Suavidad</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand-cacao mb-1">Leche Natural</h4>
+                    <p class="text-brand-cacao/70 text-xs">Otorga la humedad ideal en el horneado, aportando proteína fresca y calcio para fortalecer los huesos.</p>
+                </div>
+
+                <!-- 6. Plátano -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-trigo/30 overflow-hidden group">
+                    <div class="h-36 rounded-2xl overflow-hidden mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1528825871115-3581a5387919?q=80&w=600&auto=format&fit=crop" alt="Plátano" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs font-bold text-brand-cacao">Dulzura Natural</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand-cacao mb-1">Plátano Madurado</h4>
+                    <p class="text-brand-cacao/70 text-xs">Endulzante natural cargado de potasio que evita azúcares procesados.</p>
+                </div>
+
+                <!-- 7. Cacao / Chispas -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-trigo/30 overflow-hidden group sm:col-span-2 lg:col-span-2">
+                    <div class="h-36 rounded-2xl overflow-hidden mb-4 relative">
+                        <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?q=80&w=600&auto=format&fit=crop" alt="Cacao y Chispas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs font-bold text-brand-cacao">Sabor Premium</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand-cacao mb-1">Cacao Orgánico & Chispas de Chocolate</h4>
+                    <p class="text-brand-cacao/70 text-xs">Aporta antioxidantes naturales y el toque crocante inolvidable en la versión Chocochips.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SOBRE NOSOTROS -->
+    <section id="nosotros" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Imagen -->
+                <div class="relative">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-brand-trigo/40">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop" alt="Equipo KusiCookie" class="w-full h-[380px] object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-brand-cacao text-white p-6 rounded-2xl shadow-xl hidden sm:block max-w-xs">
+                        <p class="text-sm font-semibold italic">"KusiCookie nace del deseo de nutrir a nuestra comunidad con un producto sabroso, accesible y altamente alimenticio."</p>
+                        <span class="text-xs text-brand-sol font-bold block mt-2">— Equipo KusiCookie</span>
+                    </div>
+                </div>
+
+                <!-- Texto -->
+                <div class="space-y-6">
+                    <div class="inline-block bg-brand-verdeLight text-brand-verde px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                        Propuesta Nutritiva
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-cacao">
+                        ¿Qué es KusiCookie?
+                    </h2>
+                    <p class="text-brand-cacao/80 leading-relaxed">
+                        <strong>KusiCookie</strong> es un emprendimiento enfocado en resolver la falta de opciones nutritivas en loncheras y refrigerios diarios.
+                    </p>
+                    <p class="text-brand-cacao/80 leading-relaxed">
+                        Combinamos granos andinos como la harina de quinua, linaza y chía con la frescura de la leche natural y el plátano. Nuestra misión es combatir la anemia y ofrecer un snack delicioso, accesible y 100% natural.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div class="flex items-start space-x-3">
+                            <div class="text-brand-verde text-xl mt-1"><i class="fa-solid fa-check-circle"></i></div>
+                            <div>
+                                <h5 class="font-bold text-brand-cacao">Accesible</h5>
+                                <p class="text-xs text-brand-cacao/70">Precios desde S/ 2.00</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="text-brand-verde text-xl mt-1"><i class="fa-solid fa-leaf"></i></div>
+                            <div>
+                                <h5 class="font-bold text-brand-cacao">Artesanal</h5>
+                                <p class="text-xs text-brand-cacao/70">Insumos seleccionados a mano</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CALCULADORA Y FORMULARIO DE PEDIDO -->
+    <section id="pedidos" class="py-20 bg-brand-cacao text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-sol text-xs font-extrabold uppercase tracking-widest">Haz tu Pedido Directo</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">Resumen & Pedido KusiCookie</h2>
+                <p class="text-brand-trigo/80 text-sm sm:text-base mt-2">Selecciona las cantidades, completa tus datos de entrega y envía tu orden directa a WhatsApp.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Selección de Productos -->
+                <div class="lg:col-span-7 bg-white/10 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6">
+                    <h3 class="text-xl font-bold text-brand-sol border-b border-white/10 pb-3 flex items-center justify-between">
+                        <span>1. Selecciona tus Productos</span>
+                        <span class="text-xs font-normal text-white/70">Precios en Soles (S/)</span>
+                    </h3>
+
+                    <!-- Producto 1: Chocochips -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 gap-4">
+                        <div class="flex items-center space-x-4 w-full sm:w-auto">
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl flex-shrink-0">
+                                🍫
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Galletas Chocochips</h4>
+                                <p class="text-xs text-brand-trigo/70">Con quinua, leche y chispas</p>
+                                <span class="text-brand-sol font-semibold text-sm">S/ 2.50 c/u</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-black/20 rounded-xl p-1">
+                            <button onclick="updateQty('chocochips', -1)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold flex items-center justify-center transition">-</button>
+                            <span id="qty-chocochips" class="w-8 text-center font-bold">0</span>
+                            <button onclick="updateQty('chocochips', 1)" class="w-8 h-8 rounded-lg bg-brand-verde hover:bg-brand-verdeHover text-white font-bold flex items-center justify-center transition">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Producto 2: Chía y Linaza -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 gap-4">
+                        <div class="flex items-center space-x-4 w-full sm:w-auto">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl flex-shrink-0">
+                                🌾
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Galletas de Chía & Linaza</h4>
+                                <p class="text-xs text-brand-trigo/70">Sin chispas, granos enteros</p>
+                                <span class="text-brand-sol font-semibold text-sm">S/ 2.00 c/u</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-black/20 rounded-xl p-1">
+                            <button onclick="updateQty('chia', -1)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold flex items-center justify-center transition">-</button>
+                            <span id="qty-chia" class="w-8 text-center font-bold">0</span>
+                            <button onclick="updateQty('chia', 1)" class="w-8 h-8 rounded-lg bg-brand-verde hover:bg-brand-verdeHover text-white font-bold flex items-center justify-center transition">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Producto 3: Pack -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 gap-4">
+                        <div class="flex items-center space-x-4 w-full sm:w-auto">
+                            <div class="w-12 h-12 rounded-xl bg-amber-400/20 text-brand-sol flex items-center justify-center text-2xl flex-shrink-0">
+                                📦
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Pack Nutritivo (6 Unidades)</h4>
+                                <p class="text-xs text-brand-trigo/70">3 Chocochips + 3 Chía & Linaza</p>
+                                <span class="text-brand-sol font-semibold text-sm">S/ 13.00 c/u</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-black/20 rounded-xl p-1">
+                            <button onclick="updateQty('pack', -1)" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold flex items-center justify-center transition">-</button>
+                            <span id="qty-pack" class="w-8 text-center font-bold">0</span>
+                            <button onclick="updateQty('pack', 1)" class="w-8 h-8 rounded-lg bg-brand-verde hover:bg-brand-verdeHover text-white font-bold flex items-center justify-center transition">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos de Envío & Resumen -->
+                <div class="lg:col-span-5 bg-white text-brand-cacao p-6 sm:p-8 rounded-3xl shadow-2xl space-y-6">
+                    <h3 class="text-xl font-bold text-brand-cacao border-b border-brand-trigo pb-3 flex items-center justify-between">
+                        <span>2. Datos de Entrega & Pago</span>
+                        <i class="fa-solid fa-receipt text-brand-verde"></i>
+                    </h3>
+
+                    <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-brand-cacao/70 mb-1">Nombre Completo *</label>
+                            <input type="text" id="customerName" required placeholder="Ej. Ana García" class="w-full px-4 py-3 rounded-xl border border-brand-trigo focus:outline-none focus:border-brand-verde text-sm bg-brand-avena/30">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-brand-cacao/70 mb-1">Lugar de Entrega / Salón / Dirección *</label>
+                            <input type="text" id="customerLocation" required placeholder="Ej. Aula 5to A / Entrega en hora de recreo" class="w-full px-4 py-3 rounded-xl border border-brand-trigo focus:outline-none focus:border-brand-verde text-sm bg-brand-avena/30">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-brand-cacao/70 mb-1">Método de Pago *</label>
+                            <select id="paymentMethod" required class="w-full px-4 py-3 rounded-xl border border-brand-trigo focus:outline-none focus:border-brand-verde text-sm bg-brand-avena/30 text-brand-cacao">
+                                <option value="Yape">Yape</option>
+                                <option value="Plin">Plin</option>
+                                <option value="Efectivo contra entrega">Efectivo contra entrega</option>
+                            </select>
+                        </div>
+
+                        <!-- Resumen Detallado -->
+                        <div class="bg-brand-avena/60 p-4 rounded-2xl space-y-2 border border-brand-trigo/50 text-sm">
+                            <div class="flex justify-between text-brand-cacao/80">
+                                <span>Subtotal</span>
+                                <span id="summarySubtotal" class="font-semibold">S/ 0.00</span>
+                            </div>
+                            <div class="flex justify-between text-brand-cacao/80">
+                                <span>Entrega</span>
+                                <span class="font-semibold text-brand-verde">Coordinada / Directa</span>
+                            </div>
+                            <div class="border-t border-brand-trigo/80 pt-2 flex justify-between text-lg font-extrabold text-brand-cacao">
+                                <span>Total a Pagar</span>
+                                <span id="summaryTotal" class="text-brand-verde">S/ 0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Botón Enviar WhatsApp -->
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg transition duration-300 flex items-center justify-center space-x-2 text-base">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            <span>Enviar Pedido por WhatsApp</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer class="bg-brand-cacaoDark text-brand-trigo py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-verde flex items-center justify-center text-white text-xl">
+                            <i class="fa-solid fa-cookie-bite"></i>
+                        </div>
+                        <span class="text-2xl font-extrabold text-white">Kusi<span class="text-brand-verde">Cookie</span></span>
+                    </div>
+                    <p class="text-sm text-brand-trigo/70 leading-relaxed">
+                        Galletas nutritivas a base de quinua, avena, chía, linaza, plátano, leche natural y cacao formuladas para combatir la anemia.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">Navegación</h4>
+                    <ul class="space-y-2 text-sm text-brand-trigo/70">
+                        <li><a href="#inicio" class="hover:text-white transition">Inicio</a></li>
+                        <li><a href="#catalogo" class="hover:text-white transition">Catálogo</a></li>
+                        <li><a href="#ingredientes" class="hover:text-white transition">Ingredientes</a></li>
+                        <li><a href="#nosotros" class="hover:text-white transition">Sobre KusiCookie</a></li>
+                        <li><a href="#pedidos" class="hover:text-white transition">Pedidos</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">Contacto & Gestión</h4>
+                    <p class="text-sm text-brand-trigo/70 mb-2"><i class="fa-solid fa-envelope text-brand-verde mr-2"></i> contacto@kusicookie.pe</p>
+                    <p class="text-sm text-brand-trigo/70 mb-4"><i class="fa-brands fa-whatsapp text-brand-verde mr-2"></i> +51 999 999 999</p>
+                    <button onclick="openAdminModal()" class="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg font-semibold transition border border-white/10 flex items-center space-x-2">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Acceso Administrador</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-brand-trigo/50">
+                <p>&copy; 2026 KusiCookie. Proyecto de emprendimiento nutritivo.</p>
+                <p class="mt-2 sm:mt-0">Diseñado para la salud y nutrición escolar</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE CONFIRMACIÓN DE PEDIDO -->
+    <div id="orderModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center shadow-2xl transform transition-all">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-brand-cacao mb-2">¡Pedido Listo para Enviar!</h3>
+            <p class="text-brand-cacao/70 text-sm mb-4">
+                Se ha generado el resumen formal de tu pedido. Haz clic en el botón verde para abrir WhatsApp y enviarlo directamente.
+            </p>
+
+            <div class="bg-brand-avena p-4 rounded-2xl text-left mb-6 space-y-1 text-xs text-brand-cacao border border-brand-trigo/60">
+                <p class="font-bold text-sm mb-1 text-brand-verde">Resumen de Compra KusiCookie:</p>
+                <p id="modalDetailName"></p>
+                <p id="modalDetailLocation"></p>
+                <p id="modalDetailPayment"></p>
+                <p id="modalDetailItems" class="font-semibold mt-2 pt-2 border-t border-brand-trigo/50"></p>
+                <p id="modalDetailTotal" class="text-base font-extrabold text-brand-cacao mt-2 pt-2 border-t border-brand-trigo"></p>
+            </div>
+
+            <div class="flex space-x-3">
+                <button onclick="closeModal()" class="w-1/2 bg-gray-200 hover:bg-gray-300 text-brand-cacao font-bold py-3 rounded-xl text-sm transition">
+                    Volver
+                </button>
+                <a id="whatsappConfirmBtn" href="#" target="_blank" onclick="confirmAndDeductStock()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm transition flex items-center justify-center space-x-1 shadow-md">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Abrir WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ADMINISTRADOR / PANEL DE CONTROL DE STOCK -->
+    <div id="adminModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeAdminModal()" class="absolute top-5 right-5 text-gray-400 hover:text-brand-cacao text-xl font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Vista 1: Login Admin -->
+            <div id="adminLoginView" class="space-y-4">
+                <div class="w-14 h-14 rounded-2xl bg-brand-cacao text-white flex items-center justify-center text-2xl mx-auto mb-2">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-center text-brand-cacao">Panel Administrador</h3>
+                <p class="text-xs text-center text-brand-cacao/70">Ingresa la clave para gestionar el stock disponible y la demanda del negocio.</p>
+                
+                <div>
+                    <label class="block text-xs font-bold uppercase text-brand-cacao/70 mb-1">Contraseña de Administrador</label>
+                    <input type="password" id="adminPassword" placeholder="Clave de acceso (ej: admin123)" class="w-full px-4 py-3 rounded-xl border border-brand-trigo focus:outline-none focus:border-brand-verde text-sm bg-brand-avena/30">
+                    <p id="adminAuthError" class="text-red-600 text-xs mt-1 hidden font-semibold">Contraseña incorrecta. Intenta nuevamente (Clave por defecto: admin123).</p>
+                </div>
+
+                <button onclick="authenticateAdmin()" class="w-full bg-brand-cacao hover:bg-brand-cacaoDark text-white font-bold py-3.5 rounded-xl transition shadow-md text-sm">
+                    Ingresar al Panel
+                </button>
+            </div>
+
+            <!-- Vista 2: Dashboard Control de Stock -->
+            <div id="adminDashboardView" class="hidden space-y-6">
+                <div class="flex items-center justify-between border-b border-brand-trigo pb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-verde text-white flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-brand-cacao leading-none">Gestión de Stock</h3>
+                            <span class="text-xs text-brand-verde font-semibold">Control en Tiempo Real</span>
+                        </div>
+                    </div>
+                    <button onclick="logoutAdmin()" class="text-xs text-red-600 hover:underline font-bold">Cerrar Sesión</button>
+                </div>
+
+                <p class="text-xs text-brand-cacao/70">
+                    Modifica las unidades disponibles para evitar quedarte sin galletas durante los pedidos. Los cambios se actualizarán al instante en la tienda.
+                </p>
+
+                <!-- Lista de Productos en Admin -->
+                <div class="space-y-4">
+                    <!-- Item Admin 1: Chocochips -->
+                    <div class="flex items-center justify-between p-3 bg-brand-avena/50 rounded-2xl border border-brand-trigo/50">
+                        <div>
+                            <h4 class="font-bold text-sm text-brand-cacao">Galletas Chocochips</h4>
+                            <span class="text-xs text-brand-cacao/60">Precio: S/ 2.50</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold text-brand-cacao">Stock:</span>
+                            <input type="number" id="admin-stock-chocochips" min="0" class="w-16 px-2 py-1 border rounded-lg text-center font-bold text-sm bg-white border-brand-trigo">
+                        </div>
+                    </div>
+
+                    <!-- Item Admin 2: Chía y Linaza -->
+                    <div class="flex items-center justify-between p-3 bg-brand-avena/50 rounded-2xl border border-brand-trigo/50">
+                        <div>
+                            <h4 class="font-bold text-sm text-brand-cacao">Galletas Chía & Linaza</h4>
+                            <span class="text-xs text-brand-cacao/60">Precio: S/ 2.00</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold text-brand-cacao">Stock:</span>
+                            <input type="number" id="admin-stock-chia" min="0" class="w-16 px-2 py-1 border rounded-lg text-center font-bold text-sm bg-white border-brand-trigo">
+                        </div>
+                    </div>
+
+                    <!-- Item Admin 3: Pack -->
+                    <div class="flex items-center justify-between p-3 bg-brand-avena/50 rounded-2xl border border-brand-trigo/50">
+                        <div>
+                            <h4 class="font-bold text-sm text-brand-cacao">Pack Nutritivo (x6)</h4>
+                            <span class="text-xs text-brand-cacao/60">Precio: S/ 13.00</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold text-brand-cacao">Stock:</span>
+                            <input type="number" id="admin-stock-pack" min="0" class="w-16 px-2 py-1 border rounded-lg text-center font-bold text-sm bg-white border-brand-trigo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button onclick="saveAdminStock()" class="w-full bg-brand-verde hover:bg-brand-verdeHover text-white font-bold py-3.5 rounded-xl transition shadow-md text-sm flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Guardar Cambios de Stock</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. Estado de productos con stock asignado
+        const products = {
+            chocochips: { name: "Galletas Chocochips", price: 2.50, qty: 0, stock: 25 },
+            chia: { name: "Galletas de Chía & Linaza", price: 2.00, qty: 0, stock: 30 },
+            pack: { name: "Pack Nutritivo (x6)", price: 13.00, qty: 0, stock: 15 }
+        };
+
+        // Número telefónico para WhatsApp (Reemplazar con el número real de KusiCookie)
+        const WHATSAPP_PHONE = "51927618747";
+
+        // Inicializar interfaz al cargar
+        window.onload = function() {
+            updateStockUI();
+        };
+
+        // 2. Modificar cantidades en la calculadora
+        function updateQty(productId, change) {
+            if (products[productId]) {
+                const currentQty = products[productId].qty;
+                const newQty = currentQty + change;
+
+                if (newQty < 0) return;
+
+                if (newQty > products[productId].stock) {
+                    alert(`Lo sentimos, solo nos quedan ${products[productId].stock} unidades disponibles de ${products[productId].name}.`);
+                    return;
+                }
+
+                products[productId].qty = newQty;
+                document.getElementById(`qty-${productId}`).innerText = products[productId].qty;
+                calculateTotal();
+            }
+        }
+
+        // 3. Agregar directamente desde el catálogo
+        function addToOrder(productId) {
+            if (products[productId].stock <= 0) {
+                alert("Este producto está agotado por el momento.");
+                return;
+            }
+            updateQty(productId, 1);
+            document.getElementById('pedidos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 4. Calcular Totales
+        function calculateTotal() {
+            let total = 0;
+            for (const key in products) {
+                total += products[key].price * products[key].qty;
+            }
+            
+            const formattedTotal = `S/ ${total.toFixed(2)}`;
+            document.getElementById('summarySubtotal').innerText = formattedTotal;
+            document.getElementById('summaryTotal').innerText = formattedTotal;
+            return total;
+        }
+
+        // 5. Actualización dinámica de Stock e Interfaz
+        function updateStockUI() {
+            for (const key in products) {
+                const p = products[key];
+                
+                // Actualizar números de stock en tarjetas
+                const stockValElem = document.getElementById(`stock-val-${key}`);
+                if (stockValElem) stockValElem.innerText = p.stock;
+
+                const btnAdd = document.getElementById(`btn-add-${key}`);
+                const btnText = document.getElementById(`btn-text-${key}`);
+                const badgeStock = document.getElementById(`badge-stock-${key}`);
+
+                if (p.stock <= 0) {
+                    if (btnAdd) btnAdd.disabled = true;
+                    if (btnText) btnText.innerText = "Agotado";
+                    if (badgeStock) {
+                        badgeStock.className = "absolute bottom-3 left-3 bg-red-600 text-white px-2.5 py-1 rounded-lg text-xs font-bold";
+                        badgeStock.innerText = "Agotado";
+                    }
+                } else if (p.stock < 10) {
+                    if (btnAdd) btnAdd.disabled = false;
+                    if (btnText) btnText.innerText = "Agregar al Pedido";
+                    if (badgeStock) {
+                        badgeStock.className = "absolute bottom-3 left-3 bg-amber-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold";
+                        badgeStock.innerText = `Pocas unidades: ${p.stock}`;
+                    }
+                } else {
+                    if (btnAdd) btnAdd.disabled = false;
+                    if (btnText) btnText.innerText = "Agregar al Pedido";
+                    if (badgeStock) {
+                        badgeStock.className = "absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-brand-cacao px-2.5 py-1 rounded-lg text-xs font-bold border";
+                        badgeStock.innerText = `Stock: ${p.stock}`;
+                    }
+                }
+            }
+        }
+
+        // 6. Procesar el envío del pedido y formatear el mensaje corregido para WhatsApp
+        function submitOrder(event) {
+            event.preventDefault();
+            
+            const total = calculateTotal();
+            if (total === 0) {
+                alert("Por favor selecciona al menos una galleta o pack de KusiCookie para continuar.");
+                return;
+            }
+
+            const name = document.getElementById('customerName').value.trim();
+            const location = document.getElementById('customerLocation').value.trim();
+            const paymentMethod = document.getElementById('paymentMethod').value;
+
+            let itemsSummary = [];
+            let whatsappItemsFormatted = "";
+
+            for (const key in products) {
+                if (products[key].qty > 0) {
+                    const subtotalItem = (products[key].price * products[key].qty).toFixed(2);
+                    itemsSummary.push(`${products[key].qty}x ${products[key].name}`);
+                    whatsappItemsFormatted += `▫️ *${products[key].qty}x ${products[key].name}* — S/ ${subtotalItem}%0A`;
+                }
+            }
+
+            // Mostrar detalles en el modal de confirmación
+            document.getElementById('modalDetailName').innerText = `👤 Cliente: ${name}`;
+            document.getElementById('modalDetailLocation').innerText = `📍 Entrega: ${location}`;
+            document.getElementById('modalDetailPayment').innerText = `💳 Pago: ${paymentMethod}`;
+            document.getElementById('modalDetailItems').innerText = `🛒 Productos: ${itemsSummary.join(', ')}`;
+            document.getElementById('modalDetailTotal').innerText = `Total: S/ ${total.toFixed(2)}`;
+
+            // Formato de mensaje WhatsApp limpio y corregido
+            const whatsappMessage = 
+`*¡NUEVO PEDIDO - KUSICOOKIE!* 🍪%0A` +
+`------------------------------------%0A` +
+`👤 *Cliente:* ${encodeURIComponent(name)}%0A` +
+`📍 *Lugar de Entrega:* ${encodeURIComponent(location)}%0A` +
+`💳 *Método de Pago:* ${encodeURIComponent(paymentMethod)}%0A` +
+`------------------------------------%0A` +
+`📦 *DETALLE DEL PEDIDO:*%0A` +
+`${whatsappItemsFormatted}` +
+`------------------------------------%0A` +
+`💰 *TOTAL A PAGAR:* S/ ${total.toFixed(2)}%0A%0A` +
+`Quedo a la espera de la confirmación de mi pedido. ¡Muchas gracias! ✨`;
+
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${whatsappMessage}`;
+            document.getElementById('whatsappConfirmBtn').href = whatsappUrl;
+
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+
+        // Descontar stock al confirmar pedido
+        function confirmAndDeductStock() {
+            for (const key in products) {
+                if (products[key].qty > 0) {
+                    products[key].stock = Math.max(0, products[key].stock - products[key].qty);
+                    products[key].qty = 0;
+                    document.getElementById(`qty-${key}`).innerText = "0";
+                }
+            }
+            calculateTotal();
+            updateStockUI();
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+        }
+
+        // 7. LÓGICA PANEL ADMINISTRADOR
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function authenticateAdmin() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === "admin123") {
+                document.getElementById('adminAuthError').classList.add('hidden');
+                document.getElementById('adminLoginView').classList.add('hidden');
+                document.getElementById('adminDashboardView').classList.remove('hidden');
+
+                // Cargar valores actuales en inputs
+                document.getElementById('admin-stock-chocochips').value = products.chocochips.stock;
+                document.getElementById('admin-stock-chia').value = products.chia.stock;
+                document.getElementById('admin-stock-pack').value = products.pack.stock;
+            } else {
+                document.getElementById('adminAuthError').classList.remove('hidden');
+            }
+        }
+
+        function saveAdminStock() {
+            const newChocochips = parseInt(document.getElementById('admin-stock-chocochips').value) || 0;
+            const newChia = parseInt(document.getElementById('admin-stock-chia').value) || 0;
+            const newPack = parseInt(document.getElementById('admin-stock-pack').value) || 0;
+
+            products.chocochips.stock = Math.max(0, newChocochips);
+            products.chia.stock = Math.max(0, newChia);
+            products.pack.stock = Math.max(0, newPack);
+
+            updateStockUI();
+            alert("¡Stock actualizado correctamente!");
+            closeAdminModal();
+        }
+
+        function logoutAdmin() {
+            document.getElementById('adminPassword').value = "";
+            document.getElementById('adminDashboardView').classList.add('hidden');
+            document.getElementById('adminLoginView').classList.remove('hidden');
+        }
+
+        // Menú móvil
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
+                    <p class="text-xs text-brand-cacao/70 mb-3">Escanea el código QR o yapea directamente al número oficial:</p>
+                    <div class="bg-purple-900 text-white p-4 rounded-xl text-center space-y-1 mb-4 shadow-inner">
+                        <p class="text-xs font-semibold text-purple-200">Número Yape / Plin</p>
+                        <p id="yape-phone-display" class="text-2xl font-black tracking-widest">999 999 999</p>
+                        <p id="yape-name-display" class="text-xs font-bold text-purple-300">Titular: KusiCookie Oficial</p>
+                    </div>
+
+                    <!-- NOTA DE ADJUNTAR CAPTURA DE PANTALLA DE YAPE -->
+                    <div class="bg-amber-50 border-2 border-dashed border-amber-300 rounded-xl p-3.5 flex items-start space-x-3 mb-4 text-left">
+                        <div class="text-amber-600 text-xl flex-shrink-0 mt-0.5">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-amber-900 uppercase">Importante para Yape / Plin:</p>
+                            <p class="text-xs text-amber-800 leading-snug">
+                                Recuerda **adjuntar la captura de pantalla (voucher) de tu transferencia** al                       </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Método: Efectivo -->
+                <div id="method-cash-container" class="hidden text-left bg-emerald-50 border border-emerald-200 p-4 rounded-xl mb-4 text-emerald-900">
+                    <p class="text-xs font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-dollar text-emerald-600 text-lg"></i>
+                        Pago Contra Entrega en Efectivo
+                    </p>
+                    <p class="text-xs mt-1 text-emerald-800">
+                        Pagarás el monto exacto en efectivo al momento de recibir tus KusiCookies.
+                    </p>
+                </div>
+
+                <!-- Botón Confirmar Enviar a WhatsApp -->
+                <button onclick="confirmAndSendWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center space-x-2 text-base">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span>Confirmar y Enviar Pedido por WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. MODAL DE PANEL ADMINISTRADOR -->
+    <div id="modal-admin" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+<!-- ... existing code ... -->momento de enviar tu mensaje por WhatsApp para validar tu pedido.
